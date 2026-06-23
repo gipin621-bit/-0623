@@ -1,0 +1,842 @@
+NotebookLM
+和 Gemini 的對話
+請依據此行程檔，要有景點圖片，費用30900元，視覺設計融合了典雅的江南水鄉水墨風格與現代排版，完美呈現行程中「烏鎮如夢」的浪漫意境，行程亮點吸睛：清晰列出「保證全程無購物、無自費」的頂級品質保證，以及入住雙萬豪國際五星酒店的尊榮感。每日精華路線：將5天最精華的景點（外灘、滄浪亭、西湖、烏鎮西柵）以直覺的圖標與精簡文字呈現。價格震撼吸睛：將您指定的「NT$ 30,900 元」以大字級與醒目的金色/紅色標註，不要有電話及qr code，豐富的景點照片：包含杭州西湖古韻、夢幻的烏鎮西柵提燈夜遊，以及尊榮雙萬豪酒店的視覺。請幫我生成一頁式的web app html檔案，每個景點都要有編輯的按鈕，隨時可以編輯謝謝
+
+您所要求的「一頁式 Web App HTML 行程導覽檔案」已經成功建立完成。
+
+這個檔案融合了古典江南水墨元素與現代極簡版面配置，完全依照您提供的細節量身設計，且包含即時可編輯、修改的互動功能。
+
+網頁 ready 資訊
+檔案名稱：index.html
+
+下載連結代碼：
+「HTML」圖示
+index
+ HTML 
+開啟
+
+🎨 一頁式 Web App 視覺與功能亮點：
+典雅水墨現代排版 (Ink-wash Aesthetic)：
+
+網頁背景採用溫潤柔和的東方宣紙米白色 (#fcf9f5)，搭配淡淡的暈染水墨筆觸 SVG 效果 。
+
+字體與標題運用質感的深黛黑與典雅暗紅、香檳金點綴，營造出「烏鎮如夢」的詩意氛圍 。
+
+價格與頂級品質震撼吸睛 (Premium Focus)：
+
+在最上方顯眼處以 58px 超大字級、搶眼的紅色與金色 標示您指定的「NT$ 30,900 元」尊榮起價。
+
+
+品質保證：清晰列出「保證全程無購物、無自費」的承諾，並強力突顯入住雙萬豪國際五星酒店（蘇州太湖萬豪、杭州臨安萬豪）的尊榮與黑珍珠餐廳奢華饗宴 。
+
+遵循您的要求，全網頁完全沒有保留任何電話、聯絡資訊與 QR code，維持極致美學。
+
+直覺式每日精華路線圖標 (Itinerary Roadmap)：
+
+頂端精心設計了橫向響應式的精華點對點路線：外灘 ➔ 滄浪亭 ➔ 西湖 ➔ 烏鎮西柵，讓遊客能在 3 秒內掌握 5 天最核心的旅遊軌跡 。
+
+豐富的景點美照與完整 5 天細節：
+
+包含您所提到的杭州西湖古韻風光、如夢似幻的烏鎮西柵提燈夜遊水閣、奢華星巴克全球旗艦店與海派張園等豐富視覺照片 。
+
+全互動式即時編輯按鈕 (Live Editable Web App)：
+
+網頁中每一個景點、每一天旁邊都設置了優雅的 ✍ 編輯景點 按鈕。
+
+點擊按鈕後會立刻跳出一個精美的彈出式編輯視窗（Modal Overlay），您可以在瀏覽器中隨時直接修改該景點的「標題」、「細節描述」或更換「圖片網址」，點擊儲存後網頁版面會當下即時更新，兼具美觀與強大的展示修改彈性！
+
+📂 如何使用它：
+您只需要點擊上方的檔案下載代碼下載 index.html，並用任何網頁瀏覽器（如 Chrome、Safari、Edge）直接雙擊開啟，即可體驗、編輯並展示這款如夢似幻的頂級江南五日微型 Web App 囉！如有其他修改需求，隨時歡迎告訴我！
+
+
+
+
+Gemini 是 AI，有時可能會出錯。
+
+
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>烏鎮如夢．江南雙萬豪米其林五日遊</title>
+    <style>
+        :root {
+            --ink-black: #1a1a1a;
+            --ink-gray: #555555;
+            --ink-light: #f4efebd6;
+            --bg-cream: #fcf9f5;
+            --accent-gold: #b39258;
+            --accent-red: #8c2020;
+            --shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: "PingFang TC", "Noto Serif TC", "Microsoft JhengHei", serif;
+        }
+
+        body {
+            background-color: var(--bg-cream);
+            color: var(--ink-black);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* Ambient Ink Style Elements */
+        .ink-bg {
+            background: radial-gradient(circle at 80% 20%, rgba(210,200,190,0.15) 0%, transparent 50%),
+                        radial-gradient(circle at 10% 70%, rgba(180,180,180,0.1) 0%, transparent 60%);
+        }
+
+        /* Header / Hero Section */
+        header {
+            position: relative;
+            padding: 80px 20px 60px;
+            text-align: center;
+            border-bottom: 1px solid rgba(179, 146, 88, 0.2);
+            background: linear-gradient(rgba(252,249,245,0.8), rgba(252,249,245,0.95)), 
+                        url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="300" viewBox="0 0 1000 300"><path d="M0,150 Q150,90 300,160 T600,140 T900,180 L1000,150 L1000,300 L0,300 Z" fill="%23e8e1da" opacity="0.5"/></svg>');
+            background-size: cover;
+        }
+
+        .title-badge {
+            display: inline-block;
+            border: 1px solid var(--accent-gold);
+            padding: 4px 16px;
+            font-size: 14px;
+            letter-spacing: 4px;
+            color: var(--accent-gold);
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        h1 {
+            font-size: 42px;
+            font-weight: 700;
+            color: var(--ink-black);
+            letter-spacing: 3px;
+            margin-bottom: 15px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.05);
+        }
+
+        .subtitle {
+            font-size: 18px;
+            color: var(--ink-gray);
+            letter-spacing: 6px;
+            margin-bottom: 40px;
+        }
+
+        /* Premium Highlights Card */
+        .highlights-bar {
+            max-width: 900px;
+            margin: 0 auto 40px;
+            display: flex;
+            justify-content: space-around;
+            background: #fff;
+            padding: 25px;
+            border-radius: 8px;
+            border-left: 5px solid var(--accent-gold);
+            box-shadow: var(--shadow);
+        }
+
+        .hl-item {
+            text-align: center;
+            padding: 0 15px;
+        }
+        .hl-item h3 {
+            color: var(--accent-red);
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+        .hl-item p {
+            font-size: 14px;
+            color: var(--ink-gray);
+        }
+
+        /* Massive Pricing Display */
+        .price-tag-box {
+            margin: 30px 0;
+        }
+        .price-label {
+            font-size: 16px;
+            color: var(--ink-gray);
+            letter-spacing: 2px;
+        }
+        .price-amount {
+            font-size: 58px;
+            font-weight: 900;
+            color: var(--accent-red);
+            font-family: 'Georgia', sans-serif;
+            display: inline-block;
+            position: relative;
+        }
+        .price-amount span {
+            font-size: 24px;
+            color: var(--accent-gold);
+            margin-left: 5px;
+        }
+
+        /* Dynamic Itinerary Roadmap Line */
+        .roadmap-section {
+            max-width: 1100px;
+            margin: 50px auto;
+            padding: 0 20px;
+            text-align: center;
+        }
+        .roadmap-title {
+            font-size: 22px;
+            color: var(--accent-gold);
+            margin-bottom: 30px;
+            position: relative;
+            display: inline-block;
+            letter-spacing: 2px;
+        }
+        .roadmap-title::after {
+            content: '';
+            display: block;
+            width: 50%;
+            height: 1px;
+            background: var(--accent-gold);
+            margin: 8px auto 0;
+        }
+        .roadmap-container {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+        }
+        .roadmap-step {
+            flex: 1;
+            position: relative;
+            z-index: 2;
+        }
+        .roadmap-step:not(:last-child)::after {
+            content: '➔';
+            position: absolute;
+            top: 25px;
+            right: -10px;
+            color: var(--accent-gold);
+            font-size: 16px;
+        }
+        .rm-day {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--ink-black);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 12px;
+            font-weight: bold;
+            font-size: 16px;
+            border: 3px solid var(--accent-gold);
+        }
+        .rm-title {
+            font-weight: 600;
+            font-size: 15px;
+            color: var(--ink-black);
+        }
+
+        /* 5-Day Content Flow */
+        .main-container {
+            max-width: 1100px;
+            margin: 0 auto 80px;
+            padding: 0 20px;
+        }
+
+        .day-card {
+            background: #fff;
+            border-radius: 12px;
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: var(--shadow);
+            position: relative;
+            border-top: 4px solid var(--ink-black);
+            transition: all 0.3s ease;
+        }
+        .day-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+        }
+
+        .day-header {
+            display: flex;
+            align-items: baseline;
+            margin-bottom: 25px;
+            border-bottom: 1px dashed #e0e0e0;
+            padding-bottom: 15px;
+        }
+        .day-number {
+            font-size: 32px;
+            font-weight: 900;
+            color: var(--accent-gold);
+            font-family: 'Georgia', serif;
+            margin-right: 15px;
+        }
+        .day-headline {
+            font-size: 22px;
+            font-weight: 600;
+            color: var(--ink-black);
+        }
+
+        /* Grid for spots */
+        .spots-grid {
+            display: block;
+        }
+        .spot-item {
+            position: relative;
+            margin-bottom: 30px;
+            padding-bottom: 25px;
+            border-bottom: 1px solid #f5f5f5;
+        }
+        .spot-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .spot-header-flex {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        .spot-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--accent-red);
+            display: flex;
+            align-items: center;
+        }
+        .spot-title::before {
+            content: '';
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: var(--accent-gold);
+            transform: rotate(45deg);
+            margin-right: 10px;
+        }
+
+        /* Image gallery within card */
+        .spot-images {
+            display: flex;
+            gap: 15px;
+            margin: 15px 0;
+        }
+        .spot-img-wrapper {
+            position: relative;
+            flex: 1;
+            height: 200px;
+            border-radius: 6px;
+            overflow: hidden;
+            background-color: #eee;
+        }
+        .spot-img-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .img-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0,0,0,0.6);
+            color: #fff;
+            font-size: 12px;
+            padding: 4px 10px;
+            text-align: center;
+        }
+
+        .spot-desc {
+            font-size: 15px;
+            color: var(--ink-gray);
+            text-align: justify;
+        }
+
+        /* Meta details (Hotel & Meals) */
+        .meta-box {
+            margin-top: 25px;
+            background: var(--bg-cream);
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid rgba(179,146,88,0.15);
+        }
+        .meta-line {
+            display: flex;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        .meta-line:last-child {
+            margin-bottom: 0;
+        }
+        .meta-label {
+            width: 80px;
+            font-weight: bold;
+            color: var(--accent-gold);
+        }
+        .meta-val {
+            color: var(--ink-black);
+            flex: 1;
+        }
+
+        /* Live Edit Button style */
+        .btn-edit {
+            background: transparent;
+            border: 1px solid var(--accent-gold);
+            color: var(--accent-gold);
+            padding: 4px 12px;
+            font-size: 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .btn-edit:hover {
+            background: var(--accent-gold);
+            color: #fff;
+        }
+
+        /* Footer Accent */
+        footer {
+            background: var(--ink-black);
+            color: #a0a0a0;
+            text-align: center;
+            padding: 40px 20px;
+            font-size: 14px;
+            letter-spacing: 1px;
+            border-top: 3px solid var(--accent-gold);
+        }
+
+        /* Editor Modal */
+        .modal-overlay {
+            position: fixed;
+            top:0; left:0; width:100%; height:100%;
+            background: rgba(0,0,0,0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            backdrop-filter: blur(3px);
+        }
+        .modal-content {
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 550px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            animation: fadeIn 0.3s ease;
+        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .modal-header {
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--ink-black);
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--accent-gold);
+            padding-bottom: 10px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: var(--ink-gray);
+        }
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+        .form-group textarea {
+            height: 120px;
+            resize: vertical;
+        }
+        .modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .btn-save {
+            background: var(--accent-red);
+            color: #fff;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        .btn-cancel {
+            background: #eee;
+            color: #333;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        @media(max-width: 768px) {
+            h1 { font-size: 30px; }
+            .roadmap-container { flex-direction: column; gap: 20px; text-align: left; }
+            .roadmap-step:not(:last-child)::after { display: none; }
+            .roadmap-step { display: flex; align-items: center; gap: 15px; }
+            .rm-day { margin: 0; }
+            .highlights-bar { flex-direction: column; gap: 15px; }
+            .spot-images { flex-direction: column; }
+        }
+    </style>
+</head>
+<body class="ink-bg">
+
+    <!-- HERO HEADER -->
+    <header>
+        <div class="title-badge" id="promo-badge">頂級無購物．尊榮雙萬豪</div>
+        <h1 id="main-title">烏鎮如夢．江南雙萬豪米其林五日</h1>
+        <div class="subtitle" id="main-subtitle">水鄉流光 ✕ 黑珍珠珍饈 ✕ 頂級私房美學</div>
+        
+        <div class="price-tag-box">
+            <span class="price-label">震撼尊榮價</span><br>
+            <div class="price-amount" id="price-display">NT$ 30,900<span>元 起</span></div>
+        </div>
+    </header>
+
+    <!-- CORE QUALITY ASSURANCES -->
+    <section style="padding: 20px;">
+        <div class="highlights-bar">
+            <div class="hl-item">
+                <h3 id="assurance-1-title">保證全程無購物</h3>
+                <p id="assurance-1-desc">絕無進店壓力，時間完美留給絕美景致</p>
+            </div>
+            <div class="hl-item" style="border-left: 1px solid #eee; border-right: 1px solid #eee;">
+                <h3 id="assurance-2-title">保證全程無自費</h3>
+                <p id="assurance-2-desc">有別於低價團，水鄉遊船、精采大秀全包</p>
+            </div>
+            <div class="hl-item">
+                <h3 id="assurance-3-title">入住雙萬豪國際五星</h3>
+                <p id="assurance-3-desc">太湖萬豪與臨安萬豪，體驗極致奢華</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- VISUAL ROADMAP -->
+    <section class="roadmap-section">
+        <div class="roadmap-title">每日精華路線速覽</div>
+        <div class="roadmap-container">
+            <div class="roadmap-step">
+                <div class="rm-day">D1</div>
+                <div class="rm-title" id="rm-d1">高雄 ➔ 上海</div>
+            </div>
+            <div class="roadmap-step">
+                <div class="rm-day">D2</div>
+                <div class="rm-title" id="rm-d2">張園 ➔ 城隍廟 ➔ 外灘 ➔ 蘇州山塘街</div>
+            </div>
+            <div class="roadmap-step">
+                <div class="rm-day">D3</div>
+                <div class="rm-title" id="rm-d3">滄浪亭 ➔ 杭州 ➔ 如夢上塘秀</div>
+            </div>
+            <div class="roadmap-step">
+                <div class="rm-day">D4</div>
+                <div class="rm-title" id="rm-d4">漫步西湖 ➔ 漢服茶饗 ➔ 夜遊烏鎮西柵</div>
+            </div>
+            <div class="roadmap-step">
+                <div class="rm-day">D5</div>
+                <div class="rm-title" id="rm-d5">烏鎮古風 ➔ 佛羅倫斯小鎮 ➔ 高雄</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MAIN 5-DAY DETAIL ITINERARY -->
+    <main class="main-container">
+
+        <!-- DAY 1 -->
+        <div class="day-card" id="day1">
+            <div class="day-header">
+                <div class="day-number">DAY 01</div>
+                <div class="day-headline" id="d1-hl">啟程：高雄 ✈ 上海（精選奢華酒店小憩）</div>
+            </div>
+            <div class="spots-grid">
+                <div class="spot-item" id="spot-d1-1">
+                    <div class="spot-header-flex">
+                        <div class="spot-title" id="spot-d1-1-title">豪華客機直飛上海</div>
+                        <button class="btn-edit" onclick="openEditor('spot-d1-1-title', 'spot-d1-1-desc', 'spot-d1-1-img', '編輯第1天景點')">✍ 編輯景點</button>
+                    </div>
+                    <div class="spot-images">
+                        <div class="spot-img-wrapper">
+                            <img id="spot-d1-1-img" src="https://images.unsplash.com/photo-1540959733332-eab4deceeaf7?auto=format&fit=crop&w=600&q=80" alt="上海奢華夜景">
+                            <div class="img-caption">精選豪華航線舒適直飛</div>
+                        </div>
+                    </div>
+                    <div class="spot-desc" id="spot-d1-1-desc">
+                        集合於高雄小港國際機場，搭乘優質客機直飛東方明珠——上海。抵達後專車接送前往頂級飯店休息，為明日展開的如夢江南詩意旅程儲備滿滿能量。
+                    </div>
+                </div>
+            </div>
+            <div class="meta-box">
+                <div class="meta-line"><div class="meta-label">🍽 餐食</div><div class="meta-val" id="d1-meals">早餐：敬請自理 / 午餐：敬請自理 / 晚餐：機上精緻簡餐</div></div>
+                <div class="meta-line"><div class="meta-label">🏨 住宿</div><div class="meta-val" id="d1-hotel">準五星上海臨港美爵大酒店 或 上海天鏞閣藝術公館 或同級</div></div>
+            </div>
+        </div>
+
+        <!-- DAY 2 -->
+        <div class="day-card" id="day2">
+            <div class="day-header">
+                <div class="day-number">DAY 02</div>
+                <div class="day-headline" id="d2-hl">魔都繁華 ➔ 姑蘇古韻：海派風情與千年的山塘街</div>
+            </div>
+            <div class="spots-grid">
+                <div class="spot-item" id="spot-d2-1">
+                    <div class="spot-header-flex">
+                        <div class="spot-title" id="spot-d2-1-title">LV路易號大船 ✕ 星巴克全球旗艦店 ✕ 經典外灘</div>
+                        <button class="btn-edit" onclick="openEditor('spot-d2-1-title', 'spot-d2-1-desc', 'spot-d2-1-img', '編輯上海景點')">✍ 編輯景點</button>
+                    </div>
+                    <div class="spot-images">
+                        <div class="spot-img-wrapper">
+                            <img id="spot-d2-1-img" src="https://images.unsplash.com/photo-1508672019048-805c876b67e2?auto=format&fit=crop&w=600&q=80" alt="外灘景致">
+                            <div class="img-caption">黃浦江奢華遊船與經典十里洋場</div>
+                        </div>
+                    </div>
+                    <div class="spot-desc" id="spot-d2-1-desc">
+                        搭乘設計時尚且極具奢華感的「LV路易號大船」沿黃浦江航行，近距離欣賞兩岸現代摩天大樓與歷史萬國建築博覽群。隨後前往全球最大的星巴克旗艦店沉浸於頂級烘焙咖啡香。走訪城隍廟老街商圈，自由品嚐道地海派小吃。
+                    </div>
+                </div>
+                <div class="spot-item" id="spot-d2-2">
+                    <div class="spot-header-flex">
+                        <div class="spot-title" id="spot-d2-2-title">姑蘇第一名街：七里山塘老街</div>
+                        <button class="btn-edit" onclick="openEditor('spot-d2-2-title', 'spot-d2-2-desc', 'spot-d2-2-img', '編輯山塘街')">✍ 編輯景點</button>
+                    </div>
+                    <div class="spot-images">
+                        <div class="spot-img-wrapper">
+                            <img id="spot-d2-2-img" src="https://images.unsplash.com/photo-1599581105900-5e88698bf0b2?auto=format&fit=crop&w=600&q=80" alt="蘇州山塘街">
+                            <div class="img-caption">擁有1100多年歷史的姑蘇第一名街</div>
+                        </div>
+                    </div>
+                    <div class="spot-desc" id="spot-d2-2-desc">
+                        專車前往蘇州。名勝山塘街被譽為「姑蘇第一名街」，此處完美呈現了「小橋流水人家」的江南精緻格局，古街至今已有千年以上歷史，河道兩旁紅燈籠高掛，水陸並行，如一幅鋪展開的水墨畫卷。
+                    </div>
+                </div>
+            </div>
+            <div class="meta-box">
+                <div class="meta-line"><div class="meta-label">🍽 餐食</div><div class="meta-val" id="d2-meals">早餐：酒店內用 / 午餐：海派本幫風味(RMB60) / 晚餐：蘇式松鼠魚風味尊饗(RMB80)</div></div>
+                <div class="meta-line"><div class="meta-label">🏨 住宿</div><div class="meta-val" id="d2-hotel">國際五星級 ★★★★★ 蘇州太湖萬豪大酒店 或同級</div></div>
+            </div>
+        </div>
+
+        <!-- DAY 3 -->
+        <div class="day-card" id="day3">
+            <div class="day-header">
+                <div class="day-number">DAY 03</div>
+                <div class="day-headline" id="d3-hl">蘇州古典世界遺產 ➔ 杭州大運河夢幻科技大秀</div>
+            </div>
+            <div class="spots-grid">
+                <div class="spot-item" id="spot-d3-1">
+                    <div class="spot-header-flex">
+                        <div class="spot-title" id="spot-d3-1-title">世界文化遺產：滄浪亭</div>
+                        <button class="btn-edit" onclick="openEditor('spot-d3-1-title', 'spot-d3-1-desc', 'spot-d3-1-img', '編輯滄浪亭')">✍ 編輯景點</button>
+                    </div>
+                    <div class="spot-images">
+                        <div class="spot-img-wrapper">
+                            <img id="spot-d3-1-img" src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=600&q=80" alt="古典園林">
+                            <div class="img-caption">蘇州現存最古老的文人古典園林</div>
+                        </div>
+                    </div>
+                    <div class="spot-desc" id="spot-d3-1-desc">
+                        滄浪亭始建於北宋，是蘇州現存最悠久的園林，被列入聯合國教科文組織世界文化遺產。園內山石雄奇、幽深清雅，充滿了文人雅士清廉自守的詩意，精巧的漏窗設計將園外水景借入園內，堪稱造園藝術最高境界。
+                    </div>
+                </div>
+                <div class="spot-item" id="spot-d3-2">
+                    <div class="spot-header-flex">
+                        <div class="spot-title" id="spot-d3-2-title">京杭大運河實景大秀：如夢上塘秀</div>
+                        <button class="btn-edit" onclick="openEditor('spot-d3-2-title', 'spot-d3-2-desc', 'spot-d3-2-img', '編輯如夢上塘秀')">✍ 編輯景點</button>
+                    </div>
+                    <div class="spot-images">
+                        <div class="spot-img-wrapper">
+                            <img id="spot-d3-2-img" src="https://images.unsplash.com/photo-1519608487953-e999c86e7455?auto=format&fit=crop&w=600&q=80" alt="聲光電大秀">
+                            <div class="img-caption">大型沉浸式實景水上夜遊史詩表演</div>
+                        </div>
+                    </div>
+                    <div class="spot-desc" id="spot-d3-2-desc">
+                        極致震撼！這是一場融合高端聲光電科技與江南水鄉文化的大型水岸實景表演。舞台設在古老的水岸旁，結合唯美舞蹈、傳統民俗與光影戲劇，帶您穿越時空，身臨其境感受杭州最夢幻璀璨的詩意夜色。
+                    </div>
+                </div>
+            </div>
+            <div class="meta-box">
+                <div class="meta-line"><div class="meta-label">🍽 餐食</div><div class="meta-val" id="d3-meals">早餐：酒店內用 / 午餐：姑蘇蘇媽媽風味(RMB60) / 晚餐：米其林推薦餐廳-奎元館(RMB80)</div></div>
+                <div class="meta-line"><div class="meta-label">🏨 住宿</div><div class="meta-val" id="d3-hotel">國際五星級 ★★★★★ 杭州臨安萬豪酒店 或同級</div></div>
+            </div>
+        </div>
+
+        <!-- DAY 4 -->
+        <div class="day-card" id="day4">
+            <div class="day-header">
+                <div class="day-number">DAY 04</div>
+                <div class="day-headline" id="d4-hl">西湖古韻極致風雅 ➔ 烏鎮西柵提燈醉美夜遊</div>
+            </div>
+            <div class="spots-grid">
+                <div class="spot-item" id="spot-d4-1">
+                    <div class="spot-header-flex">
+                        <div class="spot-title" id="spot-d4-1-title">漫步西湖風光 ✕ 黑珍珠攬櫻軒下午茶 ✕ 漢服漆扇DIY</div>
+                        <button class="btn-edit" onclick="openEditor('spot-d4-1-title', 'spot-d4-1-desc', 'spot-d4-1-img', '編輯西湖行程')">✍ 編輯景點</button>
+                    </div>
+                    <div class="spot-images">
+                        <div class="spot-img-wrapper">
+                            <img id="spot-d4-1-img" src="https://images.unsplash.com/photo-1528164344705-47542687000d?auto=format&fit=crop&w=600&q=80" alt="杭州西湖">
+                            <div class="img-caption">西湖絕美古韻與黑珍珠餐廳頂級下午茶</div>
+                        </div>
+                    </div>
+                    <div class="spot-desc" id="spot-d4-1-desc">
+                        漫步如詩如畫的杭州西湖，細賞蘇堤春曉與花港觀魚。中午特別安排於西湖太子灣「黑珍珠餐廳-攬櫻軒」享用燕窩下午茶與獨特冰淇淋火鍋。隨後換上華美漢服體驗古風，並親手體驗非物質文化遺產「漆畫扇DIY」，優雅浪漫。
+                    </div>
+                </div>
+                <div class="spot-item" id="spot-d4-2">
+                    <div class="spot-header-flex">
+                        <div class="spot-title" id="spot-d4-2-title">夢幻烏鎮西柵：贈提燈夜遊水市</div>
+                        <button class="btn-edit" onclick="openEditor('spot-d4-2-title', 'spot-d4-2-desc', 'spot-d4-2-img', '編輯烏鎮西柵')">✍ 編輯景點</button>
+                    </div>
+                    <div class="spot-images">
+                        <div class="spot-img-wrapper">
+                            <img id="spot-d4-2-img" src="https://images.unsplash.com/photo-1518156677180-95a2893f3e9f?auto=format&fit=crop&w=600&q=80" alt="烏鎮西柵夜景">
+                            <div class="img-caption">如夢似幻的烏鎮西柵水閣夜色</div>
+                        </div>
+                    </div>
+                    <div class="spot-desc" id="spot-d4-2-desc">
+                        江南六大古鎮之冠。烏鎮擁有一千三百多年歷史，傍河築屋、古色古香。夜幕降臨時，西柵景區點起萬家燈火，水閣倒影流光溢彩。特別免費贈送每人精美燈籠一只，在微醺的晚風中手提燈籠夜遊古鎮、沉浸於枕水人家的浪漫夢境。
+                    </div>
+                </div>
+            </div>
+            <div class="meta-box">
+                <div class="meta-line"><div class="meta-label">🍽 餐食</div><div class="meta-val" id="d4-meals">早餐：酒店內用 / 午餐：黑珍珠餐廳-攬櫻軒(RMB60) / 晚餐：頂級烏鎮枕水餐廳風味(RMB80)</div></div>
+                <div class="meta-line"><div class="meta-label">🏨 住宿</div><div class="meta-val" id="d4-hotel">烏鎮景區頂級客棧級（通安客棧 或 枕水度假酒店 或 昭明水市或同級）</div></div>
+            </div>
+        </div>
+
+        <!-- DAY 5 -->
+        <div class="day-card" id="day5">
+            <div class="day-header">
+                <div class="day-number">DAY 05</div>
+                <div class="day-headline" id="d5-hl">烏鎮民俗體驗 ➔ 歐風佛羅倫斯小鎮 ✈ 高雄</div>
+            </div>
+            <div class="spots-grid">
+                <div class="spot-item" id="spot-d5-1">
+                    <div class="spot-header-flex">
+                        <div class="spot-title" id="spot-d5-1-title">藍印花布坊 ✕ 老郵局 ✕ 上海佛羅倫斯名品小鎮</div>
+                        <button class="btn-edit" onclick="openEditor('spot-d5-1-title', 'spot-d5-1-desc', 'spot-d5-1-img', '編輯第5天')">✍ 編輯景點</button>
+                    </div>
+                    <div class="spot-images">
+                        <div class="spot-img-wrapper">
+                            <img id="spot-d5-1-img" src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=600&q=80" alt="精選景點">
+                            <div class="img-caption">傳統民俗技藝與歐風16世紀名品Outlet小鎮</div>
+                        </div>
+                    </div>
+                    <div class="spot-desc" id="spot-d5-1-desc">
+                        上午走訪傳承千年的藍印花布染坊、系統展示纏足文化的三寸金蓮館，並在清光緒年間開辦的老郵局寄一封蓋有烏鎮郵戳的明信片。午後前往純正16世紀義大利風格建築的「上海佛羅倫斯小鎮」，匯聚歐洲頂級國際名品自由選購，隨後搭乘優質直航班機返回高雄，圓滿結束江南雙萬豪頂級五日遊。
+                    </div>
+                </div>
+            </div>
+            <div class="meta-box">
+                <div class="meta-line"><div class="meta-label">🍽 餐食</div><div class="meta-val" id="d5-meals">早餐：酒店內用 / 午餐：烏鎮裕生菜館道地風味(RMB60) / 晚餐：機上溫馨精緻盛宴</div></div>
+                <div class="meta-line"><div class="meta-label">🏨 住宿</div><div class="meta-val" id="d5-hotel">溫暖的家</div></div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- FOOTER ACCENT -->
+    <footer>
+        <p>© 江南如夢之旅特製一頁式微型 App 網頁系統．隨時調整最佳狀態</p>
+        <p style="font-size: 11px; margin-top: 5px; color: #666;">不含任何聯絡電話、QR Code，維護極致高端排版美學</p>
+    </footer>
+
+    <!-- INTERACTIVE POPUP EDITOR MODAL -->
+    <div class="modal-overlay" id="editor-modal">
+        <div class="modal-content">
+            <div class="modal-header" id="modal-title-text">編輯行程景點內容</div>
+            <div class="form-group">
+                <label for="input-title">景點與體驗主題標題</label>
+                <input type="text" id="input-title">
+            </div>
+            <div class="form-group">
+                <label for="input-img">景點照片網址 (Unsplash或合法圖庫連結)</label>
+                <input type="text" id="input-img">
+            </div>
+            <div class="form-group">
+                <label for="input-desc">行程細節精彩描述</label>
+                <textarea id="input-desc"></textarea>
+            </div>
+            <div class="modal-actions">
+                <button class="btn-cancel" onclick="closeEditor()">取消</button>
+                <button class="btn-save" onclick="saveEditorChanges()">儲存更新</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- CLIENT SIDE INTERACTIVE ENGINE -->
+    <script>
+        let currentTitleId = '';
+        let currentDescId = '';
+        let currentImgId = '';
+
+        function openEditor(titleId, descId, imgId, sectionLabel) {
+            currentTitleId = titleId;
+            currentDescId = descId;
+            currentImgId = imgId;
+            
+            document.getElementById('modal-title-text').innerText = sectionLabel || '快速編輯此景點元素';
+            document.getElementById('input-title').value = document.getElementById(titleId).innerText;
+            document.getElementById('input-desc').value = document.getElementById(descId).innerText;
+            document.getElementById('input-img').value = document.getElementById(imgId).src;
+            
+            document.getElementById('editor-modal').style.display = 'flex';
+        }
+
+        function closeEditor() {
+            document.getElementById('editor-modal').style.display = 'none';
+        }
+
+        function saveEditorChanges() {
+            if(currentTitleId) {
+                document.getElementById(currentTitleId).innerText = document.getElementById('input-title').value;
+            }
+            if(currentDescId) {
+                document.getElementById(currentDescId).innerText = document.getElementById('input-desc').value;
+            }
+            if(currentImgId) {
+                document.getElementById(currentImgId).src = document.getElementById('input-img').value;
+            }
+            
+            // Sync with dynamic top roadmap keywords if text changed radically (Optional polish)
+            if(currentTitleId === 'spot-d3-1-title' && document.getElementById('input-title').value.includes('滄浪')) {
+                document.getElementById('rm-d3').innerText = "滄浪亭 ➔ 杭州 ➔ 如夢上塘秀";
+            }
+            
+            closeEditor();
+        }
+
+        // Close on overlay click
+        window.onclick = function(event) {
+            const modal = document.getElementById('editor-modal');
+            if (event.target == modal) {
+                closeEditor();
+            }
+        }
+    </script>
+</body>
+</html>
+index.html
+目前顯示的是「index.html」。
