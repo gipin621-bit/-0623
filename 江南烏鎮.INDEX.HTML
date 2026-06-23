@@ -840,3 +840,240 @@ Gemini 是 AI，有時可能會出錯。
 </html>
 index.html
 目前顯示的是「index.html」。
+<!-- 記帳主按鈕 -->
+<button id="openAccountingBtn" class="btn-main">💰 開始記帳</button>
+
+<!-- 記帳彈出視窗 (Modal) -->
+<div id="accountingModal" class="modal">
+  <div class="modal-content">
+    <span class="close-btn">&times;</span>
+    <h2>新增消費項目</h2>
+    
+    <div class="form-group">
+      <label for="expenseItem">消費項目：</label>
+      <input type="text" id="expenseItem" placeholder="例如：晚餐、包車、門票">
+    </div>
+    
+    <div class="form-group">
+      <label for="expenseAmount">消費總金額 (TWD)：</label>
+      <input type="number" id="expenseAmount" placeholder="請輸入金額">
+    </div>
+    
+    <div class="form-group">
+      <label for="payer">誰負責墊錢？</label>
+      <select id="payer">
+        <option value="Lee">Lee</option>
+        <option value="Lin">Lin</option>
+        <option value="Song">Song</option>
+        <option value="Wu">Wu</option>
+      </select>
+    </div>
+    
+    <button id="saveExpenseBtn" class="btn-submit">儲存此筆消費</button>
+    
+    <hr>
+    
+    <h3>目前消費明細</h3>
+    <ul id="expenseList"></ul>
+    
+    <div class="action-group">
+      <button id="calcSettlementBtn" class="btn-calc">📊 計算分帳結果</button>
+      <button id="copyToLineBtn" class="btn-line" disabled>💬 複製到 LINE</button>
+    </div>
+    
+    <!-- 預覽分帳結果 -->
+    <div id="settlementResult" class="result-box"></div>
+  </div>
+</div>
+/* 主按鈕樣式 */
+.btn-main {
+  background-color: #00B900;
+  color: white;
+  padding: 12px 24px;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+}
+.btn-main:hover { background-color: #009900; }
+
+/* 彈出視窗背景 */
+.modal {
+  display: none; 
+  position: fixed; 
+  z-index: 1000; 
+  left: 0; top: 0; width: 100%; height: 100%; 
+  background-color: rgba(0,0,0,0.5);
+}
+
+/* 彈出視窗內容 */
+.modal-content {
+  background-color: #fff;
+  margin: 10% auto; 
+  padding: 25px; 
+  border-radius: 12px;
+  width: 90%; max-width: 500px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+  position: relative;
+  font-family: Arial, sans-serif;
+}
+
+/* 關閉按鈕 */
+.close-btn {
+  position: absolute; right: 20px; top: 15px;
+  font-size: 28px; cursor: pointer; color: #aaa;
+}
+.close-btn:hover { color: #333; }
+
+/* 表單樣式 */
+.form-group { margin-bottom: 15px; }
+.form-group label { display: block; margin-bottom: 5px; font-weight: bold; }
+.form-group input, .form-group select {
+  width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box;
+}
+
+/* 各種按鈕 */
+.btn-submit, .btn-calc, .btn-line {
+  width: 100%; padding: 12px; margin-top: 10px; border: none; border-radius: 6px; font-size: 15px; font-weight: bold; cursor: pointer;
+}
+.btn-submit { background-color: #4CAF50; color: white; }
+.btn-calc { background-color: #2196F3; color: white; }
+.btn-line { background-color: #06C755; color: white; }
+.btn-line:disabled { background-color: #ccc; cursor: not-allowed; }
+
+.action-group { display: flex; gap: 10px; }
+
+/* 結果框 */
+.result-box {
+  margin-top: 15px; padding: 12px; background-color: #f9f9f9; border-left: 5px solid #06C755; border-radius: 4px; display: none; white-space: pre-line; line-height: 1.5;
+}
+// 紀錄所有消費的陣列
+let expenses = [];
+const members = ['Lee', 'Lin', 'Song', 'Wu'];
+let lineShareText = ""; // 儲存最後要複製的 LINE 文字
+
+// DOM 元素
+const modal = document.getElementById("accountingModal");
+const openBtn = document.getElementById("openAccountingBtn");
+const closeBtn = document.querySelector(".close-btn");
+const saveExpenseBtn = document.getElementById("saveExpenseBtn");
+const calcSettlementBtn = document.getElementById("calcSettlementBtn");
+const copyToLineBtn = document.getElementById("copyToLineBtn");
+const expenseList = document.getElementById("expenseList");
+const settlementResult = document.getElementById("settlementResult");
+
+// 開關彈出視窗
+openBtn.onclick = () => modal.style.display = "block";
+closeBtn.onclick = () => modal.style.display = "none";
+window.onclick = (event) => { if (event.target == modal) modal.style.display = "none"; }
+
+// 儲存單筆消費
+saveExpenseBtn.onclick = function() {
+  const item = document.getElementById("expenseItem").value.trim();
+  const amount = parseFloat(document.getElementById("expenseAmount").value);
+  const payer = document.getElementById("payer").value;
+
+  if (!item || isNaN(amount) || amount <= 0) {
+    alert("請輸入正確的消費項目與金額！");
+    return;
+  }
+
+  // 加入陣列
+  expenses.push({ item, amount, payer });
+
+  // 更新介面列表
+  const li = document.createElement("li");
+  li.textContent = `【${payer} 墊付】 ${item}：$${amount} 元 (每人 $${(amount/4).toFixed(1)})`;
+  expenseList.appendChild(li);
+
+  // 清空輸入框
+  document.getElementById("expenseItem").value = "";
+  document.getElementById("expenseAmount").value = "";
+  
+  // 隱藏舊的計算結果，強迫重新計算
+  settlementResult.style.display = "none";
+  copyToLineBtn.disabled = true;
+};
+
+// 計算分帳邏輯 (精簡淨額結算)
+calcSettlementBtn.onclick = function() {
+  if (expenses.length === 0) {
+    alert("目前沒有任何消費紀錄喔！");
+    return;
+  }
+
+  // 1. 初始化每個人的淨額 (每個人應得或應付的總額)
+  let netBalances = { 'Lee': 0, 'Lin': 0, 'Song': 0, 'Wu': 0 };
+  let totalCost = 0;
+
+  expenses.forEach(exp => {
+    totalCost += exp.amount;
+    let share = exp.amount / 4;
+    
+    // 所有人先扣除平分金額
+    members.forEach(m => netBalances[m] -= share);
+    // 墊錢的人加回總額
+    netBalances[exp.payer] += exp.amount;
+  });
+
+  // 2. 分出債權人(應拿回錢)與債務人(應付錢)
+  let debtors = []; // {name, amount}
+  let creditors = []; // {name, amount}
+
+  members.forEach(m => {
+    let bal = Math.round(netBalances[m]); // 四捨五入到整數
+    if (bal < 0) debtors.push({ name: m, amount: Math.abs(bal) });
+    else if (bal > 0) creditors.push({ name: m, amount: bal });
+  });
+
+  // 3. 媒合配對 (誰給誰多少錢)
+  let settlementDetails = [];
+  let d = 0, c = 0;
+
+  while (d < debtors.length && c < creditors.length) {
+    let debtor = debtors[d];
+    let creditor = creditors[c];
+    let minAmount = Math.min(debtor.amount, creditor.amount);
+
+    settlementDetails.push(`👉 ${debtor.name} 需給 ${creditor.name}：$${minAmount} 元`);
+
+    debtor.amount -= minAmount;
+    creditor.amount -= minAmount;
+
+    if (debtor.amount === 0) d++;
+    if (creditor.amount === 0) c++;
+  }
+
+  // 4. 產生 LINE 複製文字
+  let textTemplate = `✨ 行程結算明細 ✨\n`;
+  textTemplate += `💰 總花費：$${Math.round(totalCost)} 元 (每人平均 $${Math.round(totalCost/4)} 元)\n\n`;
+  textTemplate += `📝 消費項目明細：\n`;
+  expenses.forEach(exp => {
+    textTemplate += ` - ${exp.item} ($${exp.amount}) 墊錢：${exp.payer}\n`;
+  });
+  textTemplate += `\n📌 分帳轉帳通知：\n`;
+  if(settlementDetails.length === 0) {
+    textTemplate += `大家剛好平分，不需互相轉帳！`;
+  } else {
+    textTemplate += settlementDetails.join('\n');
+  }
+
+  lineShareText = textTemplate;
+
+  // 顯示在網頁上預覽
+  settlementResult.textContent = lineShareText;
+  settlementResult.style.display = "block";
+  copyToLineBtn.disabled = false;
+};
+
+// 複製到剪貼簿功能
+copyToLineBtn.onclick = function() {
+  if (!lineShareText) return;
+  
+  navigator.clipboard.writeText(lineShareText).then(() => {
+    alert("✅ 已成功複製結算文字！請直接貼到 LINE 群組。");
+  }).catch(err => {
+    alert("複製失敗，請手動全選文字複製。");
+  });
+};
