@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>金門三日遊玩樂地圖 - 互動管理 App</title>
+<style>
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+    body {
+        font-family: "PingFang TC", "Heiti TC", "Microsoft JhengHei", sans-serif;
+        background-color: #f5f0e6;
+        color: #333;
+        padding: 20px;
+    }
+    .app-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        background-color: #fff;
+        border-radius: 12px;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+        padding: 25px;
+    }
+    header {
+        border-bottom: 3px solid #a64b2a;
+        padding-bottom: 15px;
+        margin-bottom: 25px;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+    }
+    .title-area h1 {
+        font-size: 28px;
+        color: #a64b2a;
+        margin-bottom: 5px;
+    }
+    .title-area p {
+        color: #76695b;
+        font-size: 14px;
+    }
+    .flight-box {
+        text-align: right;
+        font-size: 12px;
+        color: #555;
+        background-color: #fdfbf7;
+        padding: 10px;
+        border-radius: 6px;
+        border: 1px solid #e6dfd7;
+        line-height: 1.5;
+    }
+    .badge {
+        background-color: #a64b2a;
+        color: #fff;
+        padding: 2px 6px;
+        border-radius: 3px;
+        font-size: 11px;
+        font-weight: bold;
+        margin-right: 5px;
+    }
+
+    /* 主要版面區分 */
+    .columns-container {
+        table-layout: fixed;
+        width: 100%;
+        border-collapse: collapse;
+    }
+    .columns-container td {
+        vertical-align: top;
+    }
+    .day-column {
+        width: 24%;
+        padding-right: 15px;
+    }
+    .visual-column {
+        width: 28%;
+        border-left: 2px dashed #d1c7bd;
+        padding-left: 15px;
+    }
+
+    /* 行程卡片 */
+    .day-card {
+        background: #fff;
+        border: 1px solid #e6dfd7;
+        border-radius: 8px;
+        padding: 15px;
+        min-height: 550px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+    }
+    .day-title {
+        font-size: 16px;
+        font-weight: bold;
+        color: #fff;
+        background-color: #a64b2a;
+        padding: 8px;
+        border-radius: 6px;
+        text-align: center;
+        margin-bottom: 15px;
+    }
+    .day-card-2 .day-title { background-color: #3b6e8c; }
+    .day-card-3 .day-title { background-color: #5e7c60; }
+
+    .section-box {
+        margin-bottom: 12px;
+        padding-bottom: 8px;
+        border-bottom: 1px solid #f3efe9;
+    }
+    .section-label {
+        font-size: 11px;
+        font-weight: bold;
+        color: #a64b2a;
+        margin-bottom: 4px;
+    }
+    .day-card-2 .section-label { color: #3b6e8c; }
+    .day-card-3 .section-label { color: #5e7c60; }
+
+    /* 互動按鈕外殼 */
+    .item-interactive {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #faf8f5;
+        padding: 6px 10px;
+        border-radius: 4px;
+        border: 1px solid #eed;
+    }
+    .item-text {
+        font-size: 13px;
+        color: #444;
+        font-weight: 500;
+    }
+    .food-style {
+        color: #b86214;
+        font-weight: bold;
+    }
+    .edit-action-btn {
+        background: none;
+        border: none;
+        color: #999;
+        cursor: pointer;
+        font-size: 14px;
+        padding: 2px 5px;
+        border-radius: 3px;
+        transition: all 0.2s;
+    }
+    .edit-action-btn:hover {
+        color: #a64b2a;
+        background-color: #eee;
+    }
+
+    /* 右側地圖 */
+    .map-box {
+        background-color: #f1ede6;
+        border: 1px solid #dcd5cc;
+        border-radius: 8px;
+        padding: 12px;
+        margin-bottom: 15px;
+    }
+    .map-title {
+        font-size: 14px;
+        font-weight: bold;
+        color: #443e38;
+        margin-bottom: 8px;
+    }
+    .route-svg {
+        width: 100%;
+        height: auto;
+    }
+
+    /* 彈出式編輯視窗 (Modal) Style */
+    #editModal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.5);
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+    }
+    .modal-content {
+        background-color: #fff;
+        padding: 25px;
+        border-radius: 8px;
+        width: 90%;
+        max-width: 400px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    }
+    .modal-content h3 {
+        margin-bottom: 15px;
+        color: #a64b2a;
+    }
+    .modal-content input {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 14px;
+    }
+    .modal-buttons {
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+    }
+    .modal-btn {
+        padding: 8px 16px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 13px;
+    }
+    .btn-save {
+        background-color: #a64b2a;
+        color: #fff;
+    }
+    .btn-cancel {
+        background-color: #eee;
+        color: #333;
+    }
+</style>
+</head>
+<body>
+
+<div class="app-container">
+    <header>
+        <div class="title-area">
+            <h1>金門行程管理 Web App</h1>
+            <p>點擊行程右側的 ✏️ 圖示即可實時更換與調整行程細節</p>
+        </div>
+        <div class="flight-box">
+            <div><span class="badge">去程</span> B7-8955 台中 07:50 ➔ 金門 08:55</div>
+            <div style="margin-top: 4px;"><span class="badge" style="background-color:#555;">回程</span> B7-8962 金門 18:20 ➔ 台中 19:20</div>
+        </div>
+    </header>
+
+    <div class="main-layout">
+        <table class="columns-container">
+            <tr>
+                <td class="day-column">
+                    <div class="day-card">
+                        <div class="day-title">Day 1 · 跨海小金門</div>
+                        
+                        <div class="section-box">
+                            <div class="section-label">今日午餐</div>
+                            <div class="item-interactive">
+                                <span class="item-text food-style" id="d1-lunch">🍴 喬安牧場</span>
+                                <button class="edit-action-btn" onclick="openEditor('d1-lunch')">✏️</button>
+                            </div>
+                        </div>
+
+                        <div class="section-box">
+                            <div class="section-label">景點探索</div>
+                            <div class="item-interactive">
+                                <span class="item-text" id="d1-spot1">📍 小金門深度遊</span>
+                                <button class="edit-action-btn" onclick="openEditor('d1-spot1')">✏️</button>
+                            </div>
+                        </div>
+
+                        <div class="section-box">
+                            <div class="section-label">精選下午茶</div>
+                            <div class="item-interactive">
+                                <span class="item-text food-style" id="d1-tea">☕ 膩咖啡</span>
+                                <button class="edit-action-btn" onclick="openEditor('d1-tea')">✏️</button>
+                            </div>
+                        </div>
+
+                        <div class="section-box">
+                            <div class="section-label">美味晚餐</div>
+                            <div class="item-interactive">
+                                <span class="item-text food-style" id="d1-dinner">🍴 喜豐樓</span>
+                                <button class="edit-action-btn" onclick="openEditor('d1-dinner')">✏️</button>
+                            </div>
+                        </div>
+
+                        <div class="section-box">
+                            <div class="section-label">夜間漫步</div>
+                            <div class="item-interactive">
+                                <span class="item-text" id="d1-spot2">📍 水頭聚落古厝</span>
+                                <button class="edit-action-btn" onclick="openEditor('d1-spot2')">✏️</button>
+                            </div>
+                        </div>
+
+                        <div class="section-box">
+                            <div class="section-label">萬惡宵夜</div>
+                            <div class="item-interactive">
+                                <span class="item-text food-style" id="d1-supper">🍜 金城飯店</span>
+                                <button class="edit-action-btn" onclick="openEditor('d1-supper')">✏️</button>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+
+                <td class="day-column">
+                    <div class="day-card day-card-2">
+                        <div class="day-title">Day 2 · 古寧頭戰史</div>
+                        
+                        <div class="section-box">
+                            <div class="section-label">特色早餐</div>
+                            <div class="item-interactive">
+                                <span class="item-text food-style" id="d2-breakfast">🥣 永春廣東粥</span>
+                                <button class="edit-action-btn" onclick="openEditor('d2-breakfast')">✏️</button>
+                            </div>
+                        </div>
+
+                        <div class="section-box">
+                            <div class="section-label">上午景點</div>
+                            <div class="item-interactive">
+                                <span class="item-text" id="d2-spot1">📍 翟山坑道</span>
+                                <button class="edit-action-btn" onclick="openEditor('d2-spot1')">✏️</button>
+                            </div>
+                        </div>
+
+                        <div class="section-box">
+                            <div class="section-label">精緻午餐</div>
+                            <div class="item-interactive">
+                                <span class="item-text food-style" id="d2-lunch">🍴 喜悅小館</span>
+                                <button class="edit-action-btn" onclick="openEditor('d2-lunch')">✏️</button>
+                            </div>
+                        </div>
+
+                        <div class="section-box">
+                            <div class="section-label">下午景點</div>
+                            <div class="item-interactive">
+                                <span class="item-text" id="d2-spot2">📍 古寧頭戰場遺址</span>
+                                <button class="edit-action-btn" onclick="openEditor('d2-spot2')">✏️</button>
+                            </div>
+                        </div>
+
+                        <div class="section-box">
+                            <div class="section-label">悠閒下午茶</div>
+                            <div class="item-interactive">
+                                <span class="item-text food-style" id="d2-tea">🍰 百花洋樓喫茶</span>
+                                <button class="edit-action-btn" onclick="openEditor('d2-tea')">✏️</button>
+                            </div>
+                        </div>
+
+                        <div class="section-box">
+                            <div class="section-label">澎派晚餐</div>
+                            <div class="item-interactive">
+                                <span class="item-text food-style" id="d2-dinner">🐟 記德海鮮餐廳</span>
+                                <button class="edit-action-btn" onclick="openEditor('d2-dinner')">✏️</button>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+
+                <td class="day-column">
+                    <div class="day-card day-card-3">
+                        <div class="day-title">Day 3 · 沙美摩洛哥</div>
+                        
+                        <div class="section-box">
+                            <div class="section-label">晨味早餐</div>
+                            <div class="item-interactive">
+                                <span class="item-text food-style" id="d3-breakfast">🍳 金許園</span>
+                                <button class="edit-action-btn" onclick="openEditor('d3-breakfast')">✏️</button>
+                            </div>
+                        </div>
+
+                        <div class="section-box">
+                            <div class="section-label">上午景點</div>
+                            <div class="item-interactive">
+                                <span class="item-text" id="d3-spot1">📍 馬山觀測站/獅山</span>
+                                <button class="edit-action-btn" onclick="openEditor('d3-spot1')">✏️</button>
+                            </div>
+                        </div>
+
+                        <div class="section-box">
+                            <div class="section-label">海味午餐</div>
+                            <div class="item-interactive">
+                                <span class="item-text food-style" id="d3-lunch">🦀 新天地海產店</span>
+                                <button class="edit-action-btn" onclick="openEditor('d3-lunch')">✏️</button>
+                            </div>
+                        </div>
+
+                        <div class="section-box">
+                            <div class="section-label">下午景點</div>
+                            <div class="item-interactive">
+                                <span class="item-text" id="d3-spot2">📍 沙美摩洛哥老街</span>
+                                <button class="edit-action-btn" onclick="openEditor('d3-spot2')">✏️</button>
+                            </div>
+                        </div>
+
+                        <div class="section-box">
+                            <div class="section-label">點心下午茶</div>
+                            <div class="item-interactive">
+                                <span class="item-text food-style" id="d3-tea">🧁 愜意甜點工作室</span>
+                                <button class="edit-action-btn" onclick="openEditor('d3-tea')">✏️</button>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+
+                <td class="visual-column">
+                    <div class="map-box">
+                        <div class="map-title">🗺️ 行車路線模擬圖</div>
+                        <svg class="route-svg" viewBox="0 0 100 65">
+                            <path d="M10,25 Q25,10 45,20 T85,15 T90,45 T55,55 T15,50 Z" fill="#e4ded5" stroke="#c0b5a4" stroke-width="0.8"/>
+                            <path d="M2,35 Q8,28 15,35 T5,48 Z" fill="#ded7cc" stroke="#baae9c" stroke-width="0.8"/>
+                            <path d="M10,36 L25,25 L45,45 L50,25 L75,20 L80,38 L55,45 Z" fill="none" stroke="#a64b2a" stroke-width="1.2" stroke-dasharray="2,2"/>
+                            <circle cx="10" cy="36" r="2" fill="#3b6e8c"/>
+                            <circle cx="25" cy="25" r="1.5" fill="#a64b2a"/>
+                            <circle cx="45" cy="45" r="1.5" fill="#a64b2a"/>
+                            <circle cx="50" cy="25" r="1.5" fill="#a64b2a"/>
+                            <circle cx="75" cy="20" r="1.5" fill="#a64b2a"/>
+                            <circle cx="80" cy="38" r="1.5" fill="#a64b2a"/>
+                        </svg>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<div id="editModal">
+    <div class="modal-content">
+        <h3>✏️ 編輯行程內容</h3>
+        <input type="text" id="modalInput" placeholder="輸入新的景點或美食名稱...">
+        <div class="modal-buttons">
+            <button class="modal-btn btn-cancel" onclick="closeEditor()">取消</button>
+            <button class="modal-btn btn-save" onclick="saveChanges()">儲存更新</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    let activeTargetId = null;
+
+    // 開啟編輯器
+    function openEditor(targetId) {
+        activeTargetId = targetId;
+        const currentText = document.getElementById(targetId).innerText;
+        document.getElementById('modalInput').value = currentText;
+        document.getElementById('editModal').style.display = 'flex';
+    }
+
+    // 關閉編輯器
+    function closeEditor() {
+        document.getElementById('editModal').style.display = 'none';
+        activeTargetId = null;
+    }
+
+    // 將資料動態塞回網頁欄位
+    function saveChanges() {
+        const newValue = document.getElementById('modalInput').value.trim();
+        if (newValue && activeTargetId) {
+            document.getElementById(activeTargetId).innerText = newValue;
+        }
+        closeEditor();
+    }
+</script>
+
+</body>
+</html>
